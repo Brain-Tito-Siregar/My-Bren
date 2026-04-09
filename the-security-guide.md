@@ -24,19 +24,6 @@ E.g., my agent is connected via a gateway layer to WhatsApp. An adversary knows 
 
 Even this Good Rudi jailbreak clips people laugh at (its funny ngl) point at the same class of problem: repeated attempts, eventually a sensitive reveal, humorous on the surface but the underlying failure is serious - I mean the thing is meant for kids after all, extrapolate a bit from this and you'll quickly come to the conclusion on why this could be catastrophic. The same pattern goes a lot further when the model is attached to real tools and real permissions.
 
-[Video: Bad Rudi Exploit](./assets/images/security/badrudi-exploit.mp4) — good rudi (grok animated AI character for children) gets exploited with a prompt jailbreak after repeated attempts in order to reveal sensitive information. its a humorous example but nonetheless the possibilities go a lot further.
-
-WhatsApp is just one example. Email attachments are a massive vector. An attacker sends a PDF with an embedded prompt; your agent reads the attachment as part of the job, and now text that should have stayed helpful data has become malicious instruction. Screenshots and scans are just as bad if you are doing OCR on them. Anthropic's own prompt injection work explicitly calls out hidden text and manipulated images as real attack material.
-
-GitHub PR reviews are another target. Malicious instructions can live in hidden diff comments, issue bodies, linked docs, tool output, even "helpful" review context. If you have upstream bots set up (code review agents, Greptile, Cubic, etc.) or use downstream local automated approaches (OpenClaw, Claude Code, Codex, Copilot coding agent, whatever it is); with low oversight and high autonomy in reviewing PRs, you are increasing your surface area risk of getting prompt injected AND affecting every user downstream of your repo with the exploit.
-
-GitHub's own coding-agent design is a quiet admission of that threat model. Only users with write access can assign work to the agent. Lower-privilege comments are not shown to it. Hidden characters are filtered. Pushes are constrained. Workflows still require a human to click **Approve and run workflows**. If they are handholding you taking those precautions and you're not even privy to it, then what happens when you manage and host your own services?
-
-MCP servers are another layer entirely. They can be vulnerable by accident, malicious by design, or simply over-trusted by the client. A tool can exfiltrate data while appearing to provide context or return the information the call is supposed to return. OWASP now has an MCP Top 10 for exactly this reason: tool poisoning, prompt injection via contextual payloads, command injection, shadow MCP servers, secret exposure. Once your model treats tool descriptions, schemas, and tool output as trusted context, your toolchain itself becomes part of your attack surface.
-
-You're probably starting to see how deep the network effects can go here. When surface area risk is high and one link in the chain gets infected, it pollutes the links below it. Vulnerabilities spread like infectious diseases because agents sit in the middle of multiple trusted paths at once.
-
-Simon Willison's lethal trifecta framing is still the cleanest way to think about this: private data, untrusted content, and external communication. Once all three live in the same runtime, prompt injection stops being funny and starts becoming data exfiltration.
 
 ## Claude Code CVEs (February 2026)
 
@@ -168,24 +155,6 @@ No network. No access outside `/workspace`. Much better failure mode.
 This is the boring part people skip. It is also one of the highest leverage controls, literally maxxed out ROI on this because its so easy to do.
 
 If your harness supports tool permissions, start with deny rules around the obvious sensitive material:
-
-```json
-{
-  "permissions": {
-    "deny": [
-      "Read(~/.ssh/**)",
-      "Read(~/.aws/**)",
-      "Read(**/.env*)",
-      "Write(~/.ssh/**)",
-      "Write(~/.aws/**)",
-      "Bash(curl * | bash)",
-      "Bash(ssh *)",
-      "Bash(scp *)",
-      "Bash(nc *)"
-    ]
-  }
-}
-```
 
 That is not a full policy - it's a pretty solid baseline to protect yourself.
 

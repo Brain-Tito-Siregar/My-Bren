@@ -14,7 +14,6 @@ readStdin()
         const devPattern = /\b(npm\s+run\s+dev|pnpm(?:\s+run)?\s+dev|yarn\s+dev|bun\s+run\s+dev)\b/;
         const hasBlockedDev = segments.some(segment => devPattern.test(segment) && !tmuxLauncher.test(segment));
         if (hasBlockedDev) {
-          console.error('[ECC] BLOCKED: Dev server must run in tmux for log access');
           console.error('[ECC] Use: tmux new-session -d -s dev "npm run dev"');
           process.exit(2);
         }

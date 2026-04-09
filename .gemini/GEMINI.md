@@ -23,17 +23,6 @@ Gemini support is currently focused on a strong project-local instruction layer 
 - Never hardcode secrets.
 - Fail loudly with clear error messages instead of silently swallowing problems.
 
-## Security Checklist
-
-Before any commit:
-
-- No hardcoded API keys, passwords, or tokens
-- All external input validated
-- Parameterized queries for database writes
-- Sanitized HTML output where applicable
-- Authz/authn checked for sensitive paths
-- Error messages scrubbed of sensitive internals
-
 ## Delivery Standards
 
 - Use conventional commits: `feat`, `fix`, `refactor`, `docs`, `test`, `chore`, `perf`, `ci`

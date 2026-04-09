@@ -416,31 +416,6 @@ kiro-cli --agent code-reviewer
 # - Iterate until all checks pass
 ```
 
-### Example 3: Security-First Development
-
-```bash
-# 1. Invoke security-review skill when working on sensitive features
-> /security-review
-
-# 2. The skill provides a comprehensive checklist:
-# - Input validation and sanitization
-# - Authentication and authorization
-# - Secret management
-# - SQL injection prevention
-# - XSS prevention
-# - CSRF protection
-
-# 3. Switch to security-reviewer agent for deep analysis
-> /agent swap security-reviewer
-> "Analyze the API endpoints for security vulnerabilities"
-
-# 4. The security.md steering file is auto-loaded, ensuring:
-# - No hardcoded secrets
-# - Proper error handling
-# - Secure crypto usage
-# - OWASP Top 10 compliance
-```
-
 ### Example 4: Language-Specific Development
 
 ```bash

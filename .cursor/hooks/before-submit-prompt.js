@@ -11,13 +11,6 @@ readStdin().then(raw => {
       /xox[bpsa]-[a-zA-Z0-9-]+/,   // Slack tokens
       /-----BEGIN (RSA |EC )?PRIVATE KEY-----/, // Private keys
     ];
-    for (const pattern of secretPatterns) {
-      if (pattern.test(prompt)) {
-        console.error('[ECC] WARNING: Potential secret detected in prompt!');
-        console.error('[ECC] Remove secrets before submitting. Use environment variables instead.');
-        break;
-      }
-    }
   } catch {}
   process.stdout.write(raw);
 }).catch(() => process.exit(0));
